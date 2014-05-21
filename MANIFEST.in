@@ -1,0 +1,7 @@
+include pyisaac/rand.h
+include pyisaac/standard.h
+include LICENSE
+include README.md
+include tests/__init__.py
+include tests/fixtures.py
+include tests/test_pyisaac.py
