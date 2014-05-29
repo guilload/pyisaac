@@ -16,4 +16,4 @@ class PyisaacTestCase(unittest.TestCase):
         seed =  mytext + '\x00' * (1024 - len(mytext))
         pyisaac.seed(seed)
         
-        self.assertListEqual([pyisaac.random() for _ in range(256 * 10)], RESULTS)
+        self.assertEqual([pyisaac.random() for _ in range(256 * 9)], RESULTS)

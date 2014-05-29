@@ -112,4 +112,5 @@ static void seed(char *sd, int length)
         memcpy((char *)rctx.randrsl + q * length, sd, r);
 
     randinit(&rctx, TRUE);
+    isaac(&rctx);
 }
