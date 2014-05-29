@@ -11,7 +11,9 @@ class PyisaacTestCase(unittest.TestCase):
         """
         Test pyisaac with a seed and results provided by Bob Jenkins.
         """
-        seed = 'This is <i>not</i> the right mytext.'
+        mytext = 'This is <i>not</i> the right mytext.'
+
+        seed =  mytext + '\x00' * (1024 - len(mytext))
         pyisaac.seed(seed)
         
         self.assertListEqual([pyisaac.random() for _ in range(256 * 10)], RESULTS)

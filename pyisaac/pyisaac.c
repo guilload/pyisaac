@@ -3,12 +3,13 @@
 #include <string.h>
 #include "rand.h"
 
+#define RANDSIZB (RANDSIZ * sizeof(ub4))
 
 static randctx rctx;
 
 static void devrandom(char *buffer, int size);
 
-static void seed(char *sd);
+static void seed(char *sd, int length);
 
 
 static char module_docstring[] =
@@ -39,14 +40,14 @@ static PyMethodDef module_methods[] = {
 
 PyMODINIT_FUNC initpyisaac(void)
 {
-    char sd[RANDSIZ];
+    char sd[RANDSIZB];
 
     PyObject *m = Py_InitModule3("pyisaac", module_methods, module_docstring);
     if (m == NULL)
         return;
 
-    devrandom(sd, RANDSIZ);
-    seed(sd);
+    devrandom(sd, RANDSIZB);
+    seed(sd, RANDSIZB);
 }
 
 static PyObject *pyisaac_random(PyObject *self)
@@ -57,11 +58,12 @@ static PyObject *pyisaac_random(PyObject *self)
 static PyObject *pyisaac_seed(PyObject *self, PyObject *args)
 {   
     const char *sd;
+    int length;
 
-    if (!PyArg_ParseTuple(args, "s", &sd))
+    if (!PyArg_ParseTuple(args, "s#", &sd, &length))
         return NULL;
 
-    seed(sd);
+    seed(sd, length);
 
     Py_RETURN_NONE;
 }
@@ -96,13 +98,18 @@ static void devrandom(char *buffer, int size)
     close(fd);
 }
 
-static void seed(char *sd)
+static void seed(char *sd, int length)
 {
-    int i;
+    int i, q, r;  // q = quotient, r = remainder
 
-    for (i = 0; i < RANDSIZ; ++i)
-        rctx.randrsl[i] = 0;
+    q = (RANDSIZB) / length;
+    r = (RANDSIZB) % length;
 
-    memcpy((char *)rctx.randrsl, sd, strnlen(sd, RANDSIZ));
+    for (i = 0; i < q; i++)
+        memcpy((char *)rctx.randrsl + i * length, sd, length);
+
+    if (r)
+        memcpy((char *)rctx.randrsl + q * length, sd, r);
+
     randinit(&rctx, TRUE);
 }
