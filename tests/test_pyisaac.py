@@ -14,6 +14,9 @@ class PyisaacTestCase(unittest.TestCase):
         mytext = 'This is <i>not</i> the right mytext.'
 
         seed =  mytext + '\x00' * (1024 - len(mytext))
+
         pyisaac.seed(seed)
-        
-        self.assertEqual([pyisaac.random() for _ in range(256 * 9)], RESULTS)
+        self.assertEqual(pyisaac.randuint32(), RESULTS[0])
+
+        pyisaac.seed(seed)
+        self.assertEqual([pyisaac.randuint32() for _ in range(256 * 9)], RESULTS)
