@@ -1,14 +1,33 @@
-from distutils.core import setup, Extension
+from codecs import open
+from os import path
+
+from setuptools import find_packages, setup, Extension
+
+here = path.abspath(path.dirname(__file__))
+
+with open(path.join(here, 'README.rst'), encoding='utf-8') as f:
+    long_description = f.read()
 
 
-pyisaac = Extension('pyisaac', sources=['pyisaac/pyisaac.c', 'pyisaac/rand.c'])
+pyisaac = Extension('_pyisaac', sources=['pyisaac/_pyisaac.c', 'pyisaac/rand.c'])
 
-setup(name = 'pyisaac',
-      version = '0.1',
-      description = 'ISAAC: a fast cryptographically secure pseudo random number generator',
+setup(name='pyisaac',
+      version='0.1',
+      description='ISAAC: a fast cryptographically secure pseudo random number generator',
+      long_description=long_description,
+      url='https://github.com/guilload/pyisaac',
       author='Adrien Guillo',
       author_email='adrien@guilload.com',
-      url='https://github.com/guilload/pyisaac',
-      platforms=['Linux', 'OS X'],
       license='MIT',
-      ext_modules = [pyisaac])
+      classifiers=[
+                   'Development Status :: 3 - Beta',
+                   'Intended Audience :: Developers',
+                   'License :: OSI Approved :: MIT License',
+                   'Programming Language :: Python :: 2.6',
+                   'Programming Language :: Python :: 2.7',
+                   ],
+      keywords='ISAAC, CSPRNG, PRNG, cryptography',
+      platforms=['Cross-platform'],
+      ext_modules=[pyisaac],
+      packages=find_packages(exclude=['tests']),
+      )
