@@ -2,6 +2,3 @@ include pyisaac/rand.h
 include pyisaac/standard.h
 include LICENSE
 include README.rst
-include tests/__init__.py
-include tests/fixtures.py
-include tests/test_pyisaac.py
