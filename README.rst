@@ -1,23 +1,31 @@
+=======
 pyisaac
 =======
 
-*pyisaac* is a Python wrapper of the C implementation of ISAAC, a cryptographically secure pseudo random number generator (CSPRNG), designed and implemented in 1996 by Bob Jenkins.
+.. image:: https://secure.travis-ci.org/guilload/pyisaac.png?branch=master
+
+Overview
+========
+*pyisaac* is a Python wrapper of the C implementation of `ISAAC <http://burtleburtle.net/bob/rand/isaac.html>`_, a cryptographically secure pseudo random number generator (CSPRNG), designed and implemented in 1996 by Bob Jenkins.
+
+Install
+=======
+The package is hosted on `PyPI <http://pypi.python.org/pypi/pyisaac>`_::
+
+$ pip install pyisaac
+$ easy_install pyisaac
 
 Use
 ===
 
-```sh
-pip install pyisaac
-```
+The API is simple:
 
-```python
 >>> import pyisaac
 >>> pyisaac.random()
-4076837358
+0.3417196273803711
 >>> pyisaac.seed('pyisaac')
 >>> pyisaac.random()
-990096228
-```
+0.9284197092056274
 
 License
 =======
