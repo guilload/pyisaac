@@ -27,7 +27,7 @@ static void seed(char *sd, int length)
 static char module_docstring[] = "";
 
 static char randuint32_docstring[] =
-    "Return a random integer in [0, 2**32 - 1].\n\n"
+    "Return a random integer in [0, 0xFFFFFFFF].\n\n"
     ">>> pyisaac.randuint32()\n"
     "3297083183";
 
@@ -45,7 +45,7 @@ static PyObject *pyisaac_randuint32(PyObject *self)
 
 static PyObject *pyisaac_random(PyObject *self)
 {
-    return Py_BuildValue("f", (rand(&rctx) % 0xFFFFFF80) / (float)0x100000000);  // 0xFFFFFF7F is the largest value that returns < 1.0 for this division
+    return PyFloat_FromDouble(rand(&rctx) / (double)0xFFFFFFFF);
 }
 
 static PyObject *pyisaac_seed(PyObject *self, PyObject *args)
